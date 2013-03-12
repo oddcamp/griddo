@@ -14,49 +14,42 @@
 /**
  * Intializes a row.
  */
-@mixin griddo-row {
+@mixin griddo-row($behaviour: false) {
   @include box-sizing(border-box);
   @include clearfix;
   @include griddo-dir;
-  list-style: none;
-  margin: 0 auto;
-  max-width: 100%;
-  width: $griddo-row-width;
-}
 
-/**
- * Initializes a collapsed (inner) row.
- */
-@mixin griddo-row-inner {
-  @include clearfix;
   list-style: none;
-  margin: 0 (-($griddo-gutter/2));
-  max-width: none;
-  width: auto;
+  padding: 0;
+
+  @if $behavior == nest {
+    margin: 0 (-($griddo-gutter/2));
+    max-width: none;
+    width: auto;
+  }
+  @else if $behavior == collapse {
+    width: 100%;
+    margin: 0;
+    max-width: $griddo-row-width;
+  }
+  @else if $behavior == nest-collapse {
+    width: auto;
+    margin: 0;
+    max-width: none;
+  }
+  @else {
+    margin: 0 auto;
+    max-width: $griddo-row-width;
+    width: 100%;
+  }
 }
 
 /**
  * Render a column.
  * A column is always relative to the number of total columns.
  */
-@mixin griddo-col($columns) {
-  @include griddo-cell;
-  @include griddo-width($columns, $griddo-columns);
-}
-
-/**
- * Render an item.
- * An item has a width and a context.
- *
- * Example:
- * @include griddo-item(1, 5);
- *
- * Returns a grid item with a width of 20%.
- * This can not be achieved with columns if the total columns are 12 since you
- * cant divide 5 with 12.
- */
-@mixin griddo-item($dividend, $divisor) {
-  @include griddo-cell;
+@mixin griddo-col($dividend, $divisor: $griddo-columns) {
+  @include griddo-col-setup;
   @include griddo-width($dividend, $divisor);
 }
 
@@ -78,26 +71,26 @@
 /**
  * Offset a column or item.
  */
-@mixin griddo-offset($offset:1) {
-  margin-left: griddo-calc($offset, $griddo-columns);
+@mixin griddo-offset($dividend: 1, $divisor: $griddo-columns) {
+  margin-left: griddo-calc($dividend, $divisor);
 }
 
 /**
  * Push a column or item.
  */
-@mixin griddo-push($push:1) {
-  left: griddo-calc($push, $griddo-columns);
+@mixin griddo-push($dividend: 1, $divisor: $griddo-columns) {
+  left: griddo-calc($dividend, $divisor);
 }
 
 /**
  * Pull a column or item.
  */
-@mixin griddo-pull($push:1) {
-  right: griddo-calc($push, $griddo-columns);
+@mixin griddo-pull($dividend: 1, $divisor: $griddo-columns) {
+  right: griddo-calc($dividend, $divisor);
 }
 
 /**
- * Direction setup
+ * Direction setup.
  */
 @mixin griddo-dir {
   direction: $griddo-dir;
@@ -109,9 +102,9 @@
 }
 
 /**
- * Cell setup (column or item).
+ * Column setup (column or item).
  */
-@mixin griddo-cell {
+@mixin griddo-col-setup {
   float: $griddo-float;
   list-style: none;
   margin: 0;
@@ -137,7 +130,7 @@
 }
 
 /**
- * Calculate percentage for a width within a context.
+ * Calculate percentage.
  */
 @function griddo-calc($dividend, $divisor) {
   @return percentage(($dividend/$divisor));
