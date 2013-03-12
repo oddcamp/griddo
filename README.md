@@ -1,12 +1,16 @@
 # Griddo
 
-Griddo is a light weight SCSS plugin to build grids.
+Griddo is a collection of SCSS mixins that helps you build grids.
 
 ## Requirements
 
 Compass or Bourbon.
 
-## Example
+## Documentation
+
+[labs.kollegorna.se/griddo](http://labs.kollegorna.se/griddo)
+
+## Simple example
 
 Demo:
 
@@ -29,10 +33,10 @@ main {
 }
 
 article {
-  @include griddo-col(8);
+  @include griddo-column(8);
 }
 
 aside {
-  @include griddo-col(4);
+  @include griddo-column(4);
 }
 ```
