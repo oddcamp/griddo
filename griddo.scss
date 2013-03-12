@@ -43,11 +43,17 @@ $griddo-row-width: 1200px !default;
 
 ////
 // Render a column.
-// A column is always relative to the number of total columns.
 ////
-@mixin griddo-col($dividend, $divisor: $griddo-columns) {
-  @include griddo-col-setup;
-  @include griddo-width($dividend, $divisor);
+@mixin griddo-col($dividend: false, $divisor: $griddo-columns) {
+  float: $griddo-float;
+  list-style: none;
+  margin: 0;
+  min-height: 1px;
+  padding: 0 ($griddo-gutter/2);
+  position: relative;
+  @if $dividend {
+    @include griddo-width($dividend, $divisor);
+  }
 }
 
 ////
@@ -96,18 +102,6 @@ $griddo-row-width: 1200px !default;
   } else {
     text-align: right;
   }
-}
-
-////
-// Column setup (column or item).
-////
-@mixin griddo-col-setup {
-  float: $griddo-float;
-  list-style: none;
-  margin: 0;
-  min-height: 1px;
-  padding: 0 ($griddo-gutter/2);
-  position: relative;
 }
 
 ////
