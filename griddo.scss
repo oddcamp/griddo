@@ -121,8 +121,8 @@ $griddo-row-width: 1200px !default;
 // Utility function to use on a container that doesn't contain any columns or
 // items.
 ////
-@mixin griddo-wrapper {
-  @include griddo-row;
+@mixin griddo-wrapper($behaviour: false) {
+  @include griddo-row($behaviour);
   padding: 0 ($griddo-gutter/2);
 }
 
