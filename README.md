@@ -14,7 +14,7 @@ Compass or Bourbon.
 
 Demo:
 
-[LINK TO LAYOUT]
+[labs.kollegorna.se/griddo/examples/simple.html](http://labs.kollegorna.se/griddo/examples/simple.html)
 
 **HTML**
 
