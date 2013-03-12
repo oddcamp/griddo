@@ -4,8 +4,9 @@
 
 // Griddo requires Compass or Bourbon.
 
+//$griddo-dir: ltr;
 //$griddo-float: left;
-//$griddo-float-opposite: right;
+//$griddo-float-opposite: right; @todo: Need this?
 //$griddo-gutter: 20px;
 //$griddo-columns: 12;
 //$griddo-row-width: 1200px;
@@ -16,6 +17,7 @@
 @mixin griddo-row {
   @include box-sizing(border-box);
   @include clearfix;
+  @include griddo-dir;
   list-style: none;
   margin: 0 auto;
   max-width: 100%;
@@ -31,18 +33,6 @@
   margin: 0 (-($griddo-gutter/2));
   max-width: none;
   width: auto;
-}
-
-/**
- * General setup for a cell (column or item).
- */
-@mixin griddo-cell {
-  float: $griddo-float;
-  list-style: none;
-  margin: 0;
-  min-height: 1px;
-  padding: 0 ($griddo-gutter/2);
-  position: relative;
 }
 
 /**
@@ -65,16 +55,9 @@
  * This can not be achieved with columns if the total columns are 12 since you
  * cant divide 5 with 12.
  */
-@mixin griddo-item($width, $context) {
+@mixin griddo-item($dividend, $divisor) {
   @include griddo-cell;
-  @include griddo-width($width, $context);
-}
-
-/**
- * Return calculated width.
- */
-@mixin griddo-width($width, $context: $griddo-columns) {
-  width: griddo-calc($width, $context);
+  @include griddo-width($dividend, $divisor);
 }
 
 /**
@@ -114,6 +97,37 @@
 }
 
 /**
+ * Direction setup
+ */
+@mixin griddo-dir {
+  direction: $griddo-dir;
+  @if $griddo-dir == ltr {
+    text-align: left;
+  } else {
+    text-align: right;
+  }
+}
+
+/**
+ * Cell setup (column or item).
+ */
+@mixin griddo-cell {
+  float: $griddo-float;
+  list-style: none;
+  margin: 0;
+  min-height: 1px;
+  padding: 0 ($griddo-gutter/2);
+  position: relative;
+}
+
+/**
+ * Return calculated width.
+ */
+@mixin griddo-width($dividend, $divisor: $griddo-columns) {
+  width: griddo-calc($dividend, $divisor);
+}
+
+/**
  * Utility function to use on a container that doesn't contain any columns or
  * items.
  */
@@ -125,6 +139,6 @@
 /**
  * Calculate percentage for a width within a context.
  */
-@function griddo-calc($width, $context) {
-  @return percentage(($width / $context));
+@function griddo-calc($dividend, $divisor) {
+  @return percentage(($dividend/$divisor));
 }
