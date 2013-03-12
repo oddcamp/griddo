@@ -4,6 +4,9 @@ Griddo is a light weight SCSS plugin to build grids.
 
 ## Example
 
+Demo:
+
+[LINK TO LAYOUT]
 
 **HTML**
 
@@ -14,9 +17,16 @@ Griddo is a light weight SCSS plugin to build grids.
 </main>
 ```
 
-**CSS**
+**SCSS**
 
-```css
+```scss
+$griddo-dir: ltr;
+$griddo-float: left;
+$griddo-float-opposite: right;
+$griddo-gutter: 20px;
+$griddo-columns: 12;
+$griddo-row-width: 1200px;
+
 main {
   @include griddo-row;
 }
