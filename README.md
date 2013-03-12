@@ -24,13 +24,6 @@ Demo:
 **SCSS**
 
 ```scss
-$griddo-dir: ltr;
-$griddo-float: left;
-$griddo-float-opposite: right;
-$griddo-gutter: 20px;
-$griddo-columns: 12;
-$griddo-row-width: 1200px;
-
 main {
   @include griddo-row;
 }
