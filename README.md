@@ -2,6 +2,10 @@
 
 Griddo is a light weight SCSS plugin to build grids.
 
+## Requirements
+
+Compass or Bourbon.
+
 ## Example
 
 Demo:
