@@ -1,83 +1,130 @@
 
 // You need to set the variables below somewhere in your project
+// The values are just examples.
 
-//$griddo-float: ;
-//$griddo-float-opposite: ;
-//$griddo-gutter: ;
-//$griddo-columns: ;
-//$griddo-row-width: ;
+// Griddo requires Compass or Bourbon.
 
+//$griddo-float: left;
+//$griddo-float-opposite: right;
+//$griddo-gutter: 20px;
+//$griddo-columns: 12;
+//$griddo-row-width: 1200px;
 
+/**
+ * Intializes a row.
+ */
 @mixin griddo-row {
-  @include griddo-clearfix;
+  @include box-sizing(border-box);
+  @include clearfix;
   list-style: none;
   margin: 0 auto;
   max-width: 100%;
   width: $griddo-row-width;
 }
 
+/**
+ * Initializes a collapsed (inner) row.
+ */
 @mixin griddo-row-inner {
-  @include griddo-clearfix;
+  @include clearfix;
   list-style: none;
   margin: 0 (-($griddo-gutter/2));
   max-width: none;
   width: auto;
 }
 
-@mixin griddo-wrapper {
-  @include griddo-row;
-  padding: 0 ($griddo-gutter/2);
-}
-
-@mixin griddo-columns($columns) {
+/**
+ * General setup for a cell (column or item).
+ */
+@mixin griddo-cell {
   float: $griddo-float;
   list-style: none;
   margin: 0;
   min-height: 1px;
   padding: 0 ($griddo-gutter/2);
   position: relative;
-  @include griddo-width($columns);
 }
 
-@mixin griddo-width($columns) {
-  width: griddo-calc($columns, $griddo-columns);
+/**
+ * Render a column.
+ * A column is always relative to the number of total columns.
+ */
+@mixin griddo-col($columns) {
+  @include griddo-cell;
+  @include griddo-width($columns, $griddo-columns);
 }
 
-@mixin griddo-columns-centered {
+/**
+ * Render an item.
+ * An item has a width and a context.
+ *
+ * Example:
+ * @include griddo-item(1, 5);
+ *
+ * Returns a grid item with a width of 20%.
+ * This can not be achieved with columns if the total columns are 12 since you
+ * cant divide 5 with 12.
+ */
+@mixin griddo-item($width, $context) {
+  @include griddo-cell;
+  @include griddo-width($width, $context);
+}
+
+/**
+ * Return calculated width.
+ */
+@mixin griddo-width($width, $context: $griddo-columns) {
+  width: griddo-calc($width, $context);
+}
+
+/**
+ * Center a column or item.
+ */
+@mixin griddo-centered {
   float: none;
   margin: 0 auto;
 }
 
-@mixin griddo-columns-last {
+/**
+* @todo: Do we need this?
+*/
+@mixin griddo-last {
   float: $griddo-float;
 }
 
+/**
+ * Offset a column or item.
+ */
 @mixin griddo-offset($offset:1) {
   margin-left: griddo-calc($offset, $griddo-columns);
 }
 
+/**
+ * Push a column or item.
+ */
 @mixin griddo-push($push:1) {
   left: griddo-calc($push, $griddo-columns);
 }
 
+/**
+ * Pull a column or item.
+ */
 @mixin griddo-pull($push:1) {
   right: griddo-calc($push, $griddo-columns);
 }
 
-@mixin griddo-clearfix {
-  *zoom:1;
-
-  &:before,
-  &:after {
-    content: " ";
-    display: table;
-  }
-
-  &:after {
-    clear: both;
-  }
+/**
+ * Utility function to use on a container that doesn't contain any columns or
+ * items.
+ */
+@mixin griddo-wrapper {
+  @include griddo-row;
+  padding: 0 ($griddo-gutter/2);
 }
 
-@function griddo-calc($columns, $griddo-colums) {
-  @return percentage(($columns / $griddo-columns));
+/**
+ * Calculate percentage for a width within a context.
+ */
+@function griddo-calc($width, $context) {
+  @return percentage(($width / $context));
 }
