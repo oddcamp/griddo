@@ -14,7 +14,7 @@ $griddo-row-width: 1200px !default;
 @mixin griddo-row($behaviour: false) {
   @include box-sizing(border-box);
   @include clearfix;
-  @include griddo-dir;
+  @include griddo-direction;
 
   list-style: none;
   padding: 0;
@@ -44,7 +44,7 @@ $griddo-row-width: 1200px !default;
 ////
 // Render a column.
 ////
-@mixin griddo-col($dividend: false, $divisor: $griddo-columns) {
+@mixin griddo-column($dividend: false, $divisor: $griddo-columns) {
   float: $griddo-float;
   list-style: none;
   margin: 0;
@@ -95,7 +95,7 @@ $griddo-row-width: 1200px !default;
 ////
 // Direction setup.
 ////
-@mixin griddo-dir {
+@mixin griddo-direction {
   direction: $griddo-dir;
   @if $griddo-dir == ltr {
     text-align: left;
@@ -115,7 +115,7 @@ $griddo-row-width: 1200px !default;
 // Utility function to use on a container that doesn't contain any columns or
 // items.
 ////
-@mixin griddo-wrapper($behaviour: false) {
+@mixin griddo-container($behaviour: false) {
   @include griddo-row($behaviour);
   padding: 0 ($griddo-gutter / 2);
 }
