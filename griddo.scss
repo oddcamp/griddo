@@ -1,19 +1,16 @@
+////
+// Set variables unless they aren't already assigned
+////
+$griddo-dir: ltr !default;
+$griddo-float: left !default;
+$griddo-float-opposite: right !default; // @todo: Need this?
+$griddo-gutter: 20px !default;
+$griddo-columns: 12 !default;
+$griddo-row-width: 1200px !default;
 
-// You need to set the variables below somewhere in your project
-// The values are just examples.
-
-// Griddo requires Compass or Bourbon.
-
-//$griddo-dir: ltr;
-//$griddo-float: left;
-//$griddo-float-opposite: right; @todo: Need this?
-//$griddo-gutter: 20px;
-//$griddo-columns: 12;
-//$griddo-row-width: 1200px;
-
-/**
- * Intializes a row.
- */
+////
+// Intializes a row.
+////
 @mixin griddo-row($behaviour: false) {
   @include box-sizing(border-box);
   @include clearfix;
@@ -44,54 +41,54 @@
   }
 }
 
-/**
- * Render a column.
- * A column is always relative to the number of total columns.
- */
+////
+// Render a column.
+// A column is always relative to the number of total columns.
+////
 @mixin griddo-col($dividend, $divisor: $griddo-columns) {
   @include griddo-col-setup;
   @include griddo-width($dividend, $divisor);
 }
 
-/**
- * Center a column or item.
- */
+////
+// Center a column or item.
+////
 @mixin griddo-centered {
   float: none;
   margin: 0 auto;
 }
 
-/**
-* @todo: Do we need this?
-*/
+////
+// @todo: Do we need this?
+////
 @mixin griddo-last {
   float: $griddo-float;
 }
 
-/**
- * Offset a column or item.
- */
+////
+// Offset a column or item.
+////
 @mixin griddo-offset($dividend: 1, $divisor: $griddo-columns) {
   margin-left: griddo-calc($dividend, $divisor);
 }
 
-/**
- * Push a column or item.
- */
+////
+// Push a column or item.
+////
 @mixin griddo-push($dividend: 1, $divisor: $griddo-columns) {
   left: griddo-calc($dividend, $divisor);
 }
 
-/**
- * Pull a column or item.
- */
+////
+// Pull a column or item.
+////
 @mixin griddo-pull($dividend: 1, $divisor: $griddo-columns) {
   right: griddo-calc($dividend, $divisor);
 }
 
-/**
- * Direction setup.
- */
+////
+// Direction setup.
+////
 @mixin griddo-dir {
   direction: $griddo-dir;
   @if $griddo-dir == ltr {
@@ -101,9 +98,9 @@
   }
 }
 
-/**
- * Column setup (column or item).
- */
+////
+// Column setup (column or item).
+////
 @mixin griddo-col-setup {
   float: $griddo-float;
   list-style: none;
@@ -113,25 +110,25 @@
   position: relative;
 }
 
-/**
- * Return calculated width.
- */
+////
+// Return calculated width.
+////
 @mixin griddo-width($dividend, $divisor: $griddo-columns) {
   width: griddo-calc($dividend, $divisor);
 }
 
-/**
- * Utility function to use on a container that doesn't contain any columns or
- * items.
- */
+////
+// Utility function to use on a container that doesn't contain any columns or
+// items.
+////
 @mixin griddo-wrapper {
   @include griddo-row;
   padding: 0 ($griddo-gutter/2);
 }
 
-/**
- * Calculate percentage.
- */
+////
+// Calculate percentage.
+////
 @function griddo-calc($dividend, $divisor) {
   @return percentage(($dividend/$divisor));
 }
