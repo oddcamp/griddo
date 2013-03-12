@@ -20,7 +20,7 @@ $griddo-row-width: 1200px !default;
   padding: 0;
 
   @if $behavior == nest {
-    margin: 0 (-($griddo-gutter/2));
+    margin: 0 (-($griddo-gutter / 2));
     max-width: none;
     width: auto;
   }
@@ -49,7 +49,7 @@ $griddo-row-width: 1200px !default;
   list-style: none;
   margin: 0;
   min-height: 1px;
-  padding: 0 ($griddo-gutter/2);
+  padding: 0 ($griddo-gutter / 2);
   position: relative;
   @if $dividend {
     @include griddo-width($dividend, $divisor);
@@ -117,12 +117,12 @@ $griddo-row-width: 1200px !default;
 ////
 @mixin griddo-wrapper($behaviour: false) {
   @include griddo-row($behaviour);
-  padding: 0 ($griddo-gutter/2);
+  padding: 0 ($griddo-gutter / 2);
 }
 
 ////
 // Calculate percentage.
 ////
 @function griddo-calc($dividend, $divisor) {
-  @return percentage(($dividend/$divisor));
+  @return percentage(($dividend / $divisor));
 }
