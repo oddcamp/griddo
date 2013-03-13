@@ -11,7 +11,7 @@ $griddo-row-width: 62.5em !default;
 ////
 // Intializes a row.
 ////
-@mixin griddo-row($behaviour: false) {
+@mixin griddo-row($behavior: false) {
   @include box-sizing(border-box);
   @include clearfix;
   @include griddo-direction;
@@ -115,8 +115,8 @@ $griddo-row-width: 62.5em !default;
 // Utility function to use on a container that doesn't contain any columns or
 // items.
 ////
-@mixin griddo-container($behaviour: false) {
-  @include griddo-row($behaviour);
+@mixin griddo-container($behavior: false) {
+  @include griddo-row($behavior);
   padding: 0 ($griddo-gutter / 2);
 }
 
