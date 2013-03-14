@@ -1,17 +1,20 @@
 ////
 // Set variables unless they aren't already assigned
 ////
+$griddo-behavior: false !default;
 $griddo-dir: ltr !default;
 $griddo-float: left !default;
 $griddo-float-opposite: right !default; // @todo: Need this?
 $griddo-gutter: 1.875em !default;
 $griddo-columns: 12 !default;
 $griddo-row-width: 62.5em !default;
+$griddo-dividend: false !default;
+$griddo-divisor: $griddo-columns !default;
 
 ////
 // Intializes a row.
 ////
-@mixin griddo-row($behavior: false) {
+@mixin griddo-row($griddo-behavior: false) {
   @include box-sizing(border-box);
   @include clearfix;
   @include griddo-direction;
@@ -19,17 +22,17 @@ $griddo-row-width: 62.5em !default;
   list-style: none;
   padding: 0;
 
-  @if $behavior == nest {
+  @if $griddo-behavior == nest {
     margin: 0 (-($griddo-gutter / 2));
     max-width: none;
     width: auto;
   }
-  @else if $behavior == collapse {
+  @else if $griddo-behavior == collapse {
     width: 100%;
     margin: 0;
     max-width: $griddo-row-width;
   }
-  @else if $behavior == nest-collapse {
+  @else if $griddo-behavior == nest-collapse {
     width: auto;
     margin: 0;
     max-width: none;
@@ -44,16 +47,23 @@ $griddo-row-width: 62.5em !default;
 ////
 // Render a column.
 ////
-@mixin griddo-column($dividend: false, $divisor: $griddo-columns) {
+@mixin griddo-column($griddo-dividend: false, $griddo-divisor: $griddo-columns) {
   float: $griddo-float;
   list-style: none;
   margin: 0;
   min-height: 1px;
   padding: 0 ($griddo-gutter / 2);
   position: relative;
-  @if $dividend {
-    @include griddo-width($dividend, $divisor);
+  @if $griddo-dividend {
+    @include griddo-width($griddo-dividend, $griddo-divisor);
   }
+}
+
+////
+// Return calculated width.
+////
+@mixin griddo-width($griddo-dividend, $griddo-divisor: $griddo-columns) {
+  width: griddo-calc($griddo-dividend, $griddo-divisor);
 }
 
 ////
@@ -66,30 +76,36 @@ $griddo-row-width: 62.5em !default;
 
 ////
 // @todo: Do we need this?
+// https://github.com/zurb/foundation/issues/1020#issuecomment-10422109
 ////
+@mixin griddo-opposite {
+  float: $griddo-float-opposite;
+}
 @mixin griddo-last {
-  float: $griddo-float;
+  @include griddo-opposite;
 }
 
 ////
 // Offset a column or item.
 ////
-@mixin griddo-offset($dividend: 1, $divisor: $griddo-columns) {
-  margin-left: griddo-calc($dividend, $divisor);
+@mixin griddo-offset($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
+  margin-#{$griddo-float}: griddo-calc($griddo-dividend, $griddo-divisor);
 }
 
 ////
 // Push a column or item.
 ////
-@mixin griddo-push($dividend: 1, $divisor: $griddo-columns) {
-  left: griddo-calc($dividend, $divisor);
+@mixin griddo-push($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
+  #{$griddo-float}: griddo-calc($griddo-dividend, $griddo-divisor);
+  #{$griddo-float-opposite}: auto;
 }
 
 ////
 // Pull a column or item.
 ////
-@mixin griddo-pull($dividend: 1, $divisor: $griddo-columns) {
-  right: griddo-calc($dividend, $divisor);
+@mixin griddo-pull($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
+  #{$griddo-float-opposite}: griddo-calc($griddo-dividend, $griddo-divisor);
+  #{$griddo-float}: auto;
 }
 
 ////
@@ -99,30 +115,24 @@ $griddo-row-width: 62.5em !default;
   direction: $griddo-dir;
   @if $griddo-dir == ltr {
     text-align: left;
-  } else {
+  }
+  @else {
     text-align: right;
   }
-}
-
-////
-// Return calculated width.
-////
-@mixin griddo-width($dividend, $divisor: $griddo-columns) {
-  width: griddo-calc($dividend, $divisor);
 }
 
 ////
 // Utility function to use on a container that doesn't contain any columns or
 // items.
 ////
-@mixin griddo-container($behavior: false) {
-  @include griddo-row($behavior);
+@mixin griddo-container($griddo-behavior: false) {
+  @include griddo-row($griddo-behavior);
   padding: 0 ($griddo-gutter / 2);
 }
 
 ////
 // Calculate percentage.
 ////
-@function griddo-calc($dividend, $divisor) {
-  @return percentage(($dividend / $divisor));
+@function griddo-calc($griddo-dividend, $griddo-divisor) {
+  @return percentage(($griddo-dividend / $griddo-divisor));
 }
