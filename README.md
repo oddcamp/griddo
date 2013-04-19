@@ -4,10 +4,6 @@ Griddo is a collection of SCSS mixins that helps you build grids.
 
 It handles grids and only grids. No responsive/breakpointy stuff. You'll have to provide that by yourself. Hello separation of concerns.
 
-## Requirements
-
-Compass or Bourbon.
-
 ## Documentation and demo
 
 See examples/index.html
