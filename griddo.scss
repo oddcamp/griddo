@@ -1,5 +1,5 @@
 //
-// Configuration.
+// Configuration
 //
 $griddo-behavior: false !default;
 $griddo-float: left !default;
@@ -23,6 +23,7 @@ $griddo-divisor: $griddo-columns !default;
 @mixin griddo-row($griddo-behavior: false) {
   @include griddo-clearfix;
 
+  clear: both;
   list-style: none;
   padding: 0;
 
@@ -72,6 +73,13 @@ $griddo-divisor: $griddo-columns !default;
 }
 
 //
+// Default float.
+//
+@mixin griddo-float {
+  float: $griddo-float;
+}
+
+//
 // Center a column or item.
 //
 @mixin griddo-centered {
@@ -118,8 +126,7 @@ $griddo-divisor: $griddo-columns !default;
 }
 
 //
-// Make a single element behave like a row with one column of
-// 100% width.
+// Make a single element behave like a row with one column of 100% width.
 //
 @mixin griddo-container($griddo-behavior: false) {
   @include griddo-row($griddo-behavior);
@@ -171,7 +178,7 @@ $griddo-divisor: $griddo-columns !default;
     }
 
     [class*="#{$column-class}"] + [class*="#{$column-class}"].end {
-      float: $griddo-float;
+      @include griddo-float;
     }
   }
 
