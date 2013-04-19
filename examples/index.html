@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Griddo Examples</title>
+    <meta name="description" content="Examples of how to use Griddo.">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/stylesheets/main.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+  </head>
+  <body>
+    <div class="example">
+      <h1>Griddo examples</h1>
+      <p>Griddo is a SCSS plugin <a href="http://www.kollegorna.se">we</a> use when building grids.</p>
+      <p>It handles grids and only grids. No responsive/breakpointy stuff. You'll have to provide that by yourself. Hello <a href="http://en.wikipedia.org/wiki/Separation_of_concerns">separation of concerns</a>.</p>
+
+      <p>Source code on <a href="https://github.com/kollegorna/griddo">GitHub</a>.</p>
+
+      <p>Questions? Ask <a href="https://twitter.com/persand">@persand</a> or <a href="https://github.com/kollegorna/griddo/issues">open an issue</a>.</p>
+
+      <p>We'll deal with better documentation and examples when we can.</p>
+
+      <p>Pull requests welcome.</p>
+
+      <h3>THANK YOU:</h3>
+
+      <p>Griddo is mostly inspired by <a href="http://foundation.zurb.com">Zurb Foundation</a> but also <a href="http://csswizardry.com/2013/02/introducing-csswizardry-grids/">csswizardy-grids</a>.</p>
+    </div>
+
+    <div class="example">
+      <h2>Columns demo</h2>
+      <p>Generated griddo classes by calling the griddo-classes mixin.</p>
+      <p>You can center, offset, push and pull just like <a href="http://foundation.zurb.com">Zurb Foundation</a>.</p>
+      <p>Just use this mixin:</p>
+      <script src="https://gist.github.com/persand/35b0a42d77f9345ef91b.js"></script>
+      <p>And it will generate <a href="https://gist.github.com/persand/cf1d14e99088ecbeaaa9">this CSS</a>.</p>
+    </div>
+
+    <div class="row">
+      <div class="column column-1"><span>1</span></div>
+      <div class="column column-11"><span>11</span></div>
+    </div>
+    <div class="row">
+      <div class="column column-2"><span>2</span></div>
+      <div class="column column-10"><span>10</span></div>
+    </div>
+    <div class="row">
+      <div class="column column-3"><span>3</span></div>
+      <div class="column column-9"><span>9</span></div>
+    </div>
+    <div class="row">
+      <div class="column column-4"><span>4</span></div>
+      <div class="column column-8"><span>8</span></div>
+    </div>
+    <div class="row">
+      <div class="column column-5"><span>5</span></div>
+      <div class="column column-7"><span>7</span></div>
+    </div>
+    <div class="row">
+      <div class="column column-6"><span>6</span></div>
+      <div class="column column-6"><span>6</span></div>
+    </div>
+    <div class="row">
+      <div class="column column-4"><span>4</span></div>
+      <div class="column column-4"><span>4</span></div>
+      <div class="column column-4"><span>4</span></div>
+    </div>
+    <div class="row">
+      <div class="column column-3"><span>3</span></div>
+      <div class="column column-3"><span>3</span></div>
+      <div class="column column-3"><span>3</span></div>
+      <div class="column column-3"><span>3</span></div>
+    </div>
+
+    <div class="example">
+      <h2>Example 1</h2>
+      <p>Content and sidebar.</p>
+      <p>Please note that the respond-to mixin isn't a part of Griddo (again: <a href="http://en.wikipedia.org/wiki/Separation_of_concerns">separation of concerns</a>).</p>
+      <script src="https://gist.github.com/persand/b81892f14072b329cc92.js"></script>
+    </div>
+
+    <div class="layout layout-1">
+      <div class="main">
+        <article class="content">
+          <h2>Content</h2>
+
+          <h4>Article 1</h4>
+          <img src="http://placekitten.com/g/800/600" alt="">
+
+          <h4>Article 2</h4>
+          <img src="http://placekitten.com/g/800/600" alt="">
+        </article>
+
+        <aside class="sidebar">
+          <h2>Sidebar</h2>
+
+          <h4>Widget 1</h4>
+          <img src="http://placekitten.com/g/800/600" alt="">
+
+          <h4>Widget 2</h4>
+          <img src="http://placekitten.com/g/800/600" alt="">
+
+          <h4>Widget 3</h4>
+          <img src="http://placekitten.com/g/800/600" alt="">
+        </aside>
+      </div>
+    </div>
+    <!-- / .layout-1 -->
+
+    <div class="example">
+      <h2>Example 2</h2>
+      <script src="https://gist.github.com/persand/5db6eb86f3c2d885ac9e.js"></script>
+    </div>
+
+    <div class="layout layout-2">
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+
+      <article>
+        <h4>Article 1</h4>
+        <img src="http://placekitten.com/g/800/600" alt="">
+      </article>
+    </div>
+    <!-- / .layout-2 -->
+
+  </body>
+</html>
