@@ -1,23 +1,27 @@
-////
-// Set variables unless they aren't already assigned
-////
+//
+// Configuration.
+//
 $griddo-behavior: false !default;
-$griddo-dir: ltr !default;
 $griddo-float: left !default;
-$griddo-float-opposite: right !default; // @todo: Need this?
+$griddo-float-opposite: right !default;
 $griddo-gutter: 1.875em !default;
 $griddo-columns: 12 !default;
 $griddo-row-width: 62.5em !default;
-$griddo-numerator: false !default;
-$griddo-denominator: $griddo-columns !default;
+$griddo-dividend: false !default;
+$griddo-divisor: $griddo-columns !default;
 
-////
+//
+// Function for calculate percentage.
+//
+@function griddo-calc($griddo-dividend, $griddo-divisor) {
+  @return percentage(($griddo-dividend / $griddo-divisor));
+}
+
+//
 // Intializes a row.
-////
+//
 @mixin griddo-row($griddo-behavior: false) {
-  @include box-sizing(border-box);
-  @include clearfix;
-  @include griddo-direction;
+  @include griddo-clearfix;
 
   list-style: none;
   padding: 0;
@@ -44,95 +48,149 @@ $griddo-denominator: $griddo-columns !default;
   }
 }
 
-////
+//
 // Render a column.
-////
-@mixin griddo-column($griddo-numerator: false, $griddo-denominator: $griddo-columns) {
+//
+@mixin griddo-column($griddo-dividend: false, $griddo-divisor: $griddo-columns) {
   float: $griddo-float;
   list-style: none;
   margin: 0;
   min-height: 1px;
   padding: 0 ($griddo-gutter / 2);
   position: relative;
-  @if $griddo-numerator {
-    @include griddo-width($griddo-numerator, $griddo-denominator);
+
+  @if $griddo-dividend {
+    @include griddo-width($griddo-dividend, $griddo-divisor);
   }
 }
 
-////
+//
 // Return calculated width.
-////
-@mixin griddo-width($griddo-numerator, $griddo-denominator: $griddo-columns) {
-  width: griddo-calc($griddo-numerator, $griddo-denominator);
+//
+@mixin griddo-width($griddo-dividend, $griddo-divisor: $griddo-columns) {
+  width: griddo-calc($griddo-dividend, $griddo-divisor);
 }
 
-////
+//
 // Center a column or item.
-////
+//
 @mixin griddo-centered {
   float: none;
   margin: 0 auto;
 }
 
-////
-// @todo: Do we need this?
-// https://github.com/zurb/foundation/issues/1020#issuecomment-10422109
-////
-@mixin griddo-opposite {
+//
+// Float last column on opposite side.
+//
+@mixin griddo-last {
   float: $griddo-float-opposite;
 }
-@mixin griddo-last {
-  @include griddo-opposite;
+
+//
+// Offset a column.
+//
+@mixin griddo-offset($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
+  margin-#{$griddo-float}: griddo-calc($griddo-dividend, $griddo-divisor);
 }
 
-////
-// Offset a column or item.
-////
-@mixin griddo-offset($griddo-numerator: 1, $griddo-denominator: $griddo-columns) {
-  margin-#{$griddo-float}: griddo-calc($griddo-numerator, $griddo-denominator);
-}
-
-////
-// Push a column or item.
-////
-@mixin griddo-push($griddo-numerator: 1, $griddo-denominator: $griddo-columns) {
-  #{$griddo-float}: griddo-calc($griddo-numerator, $griddo-denominator);
+//
+// Push a column.
+//
+@mixin griddo-push($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
+  #{$griddo-float}: griddo-calc($griddo-dividend, $griddo-divisor);
   #{$griddo-float-opposite}: auto;
 }
 
-////
-// Pull a column or item.
-////
-@mixin griddo-pull($griddo-numerator: 1, $griddo-denominator: $griddo-columns) {
-  #{$griddo-float-opposite}: griddo-calc($griddo-numerator, $griddo-denominator);
+//
+// Pull a column.
+//
+@mixin griddo-pull($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
+  #{$griddo-float-opposite}: griddo-calc($griddo-dividend, $griddo-divisor);
   #{$griddo-float}: auto;
 }
 
-////
-// Direction setup.
-////
-@mixin griddo-direction {
-  direction: $griddo-dir;
-  @if $griddo-dir == ltr {
-    text-align: left;
-  }
-  @else {
-    text-align: right;
-  }
+//
+// Collapse something
+//
+@mixin griddo-collapse {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-////
-// Utility function to use on a container that doesn't contain any columns or
-// items.
-////
+//
+// Make a single element behave like a row with one column of
+// 100% width.
+//
 @mixin griddo-container($griddo-behavior: false) {
   @include griddo-row($griddo-behavior);
   padding: 0 ($griddo-gutter / 2);
 }
 
-////
-// Calculate percentage.
-////
-@function griddo-calc($griddo-numerator, $griddo-denominator) {
-  @return percentage(($griddo-numerator / $griddo-denominator));
+//
+// Clear floats.
+//
+@mixin griddo-clearfix {
+  *zoom:1;
+  &:before, &:after { content: " "; display: table; }
+  &:after { clear: both; }
+}
+
+//
+// Create grid classes.
+//
+@mixin griddo-classes($row-class: row, $column-class: column, $columns-class: column, $total-columns: $griddo-columns, $offset-class: offset, $push-class: push, $pull-class: pull) {
+  .#{$row-class} {
+    @include griddo-row;
+
+    &.collapse {
+      .#{$column-class} {
+        @include griddo-collapse;
+      }
+    }
+
+    .#{$row-class} {
+      @include griddo-row(nest);
+
+      &.collapse {
+        @include griddo-row(nest-collapse);
+      }
+    }
+  }
+
+  @if $column-class != false {
+    .#{$column-class} {
+      @include griddo-column;
+    }
+
+    .#{$column-class}.centered {
+      @include griddo-centered;
+    }
+
+    [class*="#{$column-class}"] + [class*="#{$column-class}"]:last-child {
+      @include griddo-last;
+    }
+
+    [class*="#{$column-class}"] + [class*="#{$column-class}"].end {
+      float: $griddo-float;
+    }
+  }
+
+  @for $i from 1 through $total-columns {
+    .#{$columns-class}#{-$i} { @include griddo-width($i, $total-columns); }
+  }
+
+  @for $i from 1 through $total-columns - 1 {
+    .#{$offset-class}#{-$i} {
+      @include griddo-offset($i, $total-columns);
+    }
+
+    .#{$push-class}#{-$i} {
+      @include griddo-push($i, $total-columns);
+    }
+
+    .#{$pull-class}#{-$i} {
+      @include griddo-pull($i, $total-columns);
+    }
+  }
+
 }
