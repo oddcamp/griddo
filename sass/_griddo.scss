@@ -235,5 +235,4 @@ $griddo-divisor: $griddo-columns !default;
       @include griddo-pull($i, $total-columns);
     }
   }
-
 }

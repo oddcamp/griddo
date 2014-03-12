@@ -1,0 +1,17 @@
+{
+  "name": "griddo",
+  "version": "1.1.0",
+  "main": "sass/_griddo.scss",
+  "description": "A collection of Sass mixins that helps you build grids.",
+  "authors": ["Per Sandström <per@helloper.com>"],
+  "homepage": "https://github.com/kollegorna/griddo",
+  "keywords": [
+    "layout", "grid", "sass", "compass", "responsive", "rwd", "semantic"
+  ],
+  "ignore": [
+    "**/.*",
+    "Rakefile",
+    "*.json",
+    "*.gemspec"
+  ]
+}

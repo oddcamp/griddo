@@ -1,0 +1,5 @@
+{
+  "name": "griddo",
+  "description": "Griddo is a collection of SCSS mixins that helps you build grids. It handles grids and only grids – no breakpoints.",
+  "tags": ["grid", "layout", "rwd", "responsive-web-design", "dry", "semantic", "compass"]
+}
