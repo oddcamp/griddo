@@ -12,20 +12,6 @@ Questions? Ask [@persand](https://twitter.com/persand) or [open an issue](https:
 
 Griddo is mostly inspired by [Zurb Foundation](http://foundation.zurb.com) and also [csswizardy-grids](http://csswizardry.com/2013/02/introducing-csswizardry-grids/)</a>.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'griddo'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install griddo
-
 ## Usage
 
 **HTML**
