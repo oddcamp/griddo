@@ -1,6 +1,6 @@
 {
   "name": "griddo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "sass/_griddo.scss",
   "description": "A collection of Sass mixins that helps you build grids.",
   "authors": ["Per Sandström <per@helloper.com>"],

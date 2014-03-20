@@ -2,8 +2,8 @@
 
 Gem::Specification.new do |s|
   s.name          = "griddo"
-  s.version       = "1.1.0"
-  s.date          = "2014-03-12"
+  s.version       = "1.1.1"
+  s.date          = "2014-03-20"
   s.authors       = ["Per Sandström"]
   s.email         = ["per@helloper.com"]
   s.description   = %q{A collection of Sass mixins that helps you build grids.}
