@@ -53,7 +53,7 @@ $griddo-divisor: $griddo-columns !default;
 //
 // Row type: Nest
 //
-@mixin griddo-row-nest {
+@mixin griddo-row-nest($griddo-gutter: $griddo-gutter) {
   margin: 0 (-($griddo-gutter / 2));
   max-width: none;
   width: auto;
