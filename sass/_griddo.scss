@@ -1,66 +1,60 @@
-// Configuration
+// Vars
 
-$griddo-columns:		12 !default;			// tested values: 9 | 8 | 6 | 4 | 3 | 2 plus 16 for $griddo-row-width: 99em
-$griddo-gutter:			3em !default;
-$griddo-row-width:		75em !default;			// tested values: 99em | 57em | 43.5em | 30em
-$griddo-behavior:		false !default;
-$griddo-float:			left !default;
-$griddo-float-opposite:	right !default;
-$griddo-dividend:		false !default;
-$griddo-divisor:		$griddo-columns !default;
+$griddo-columns:        12;                 // tested values: 9 | 8 | 6 | 4 | 3 | 2 plus 16 for $griddo-row-width: 99em
+$griddo-gutter:         3em !default;
+$griddo-spacer:         $griddo-gutter/2;
+$griddo-row-width:      75em !default;      // tested values: 99em | 57em | 43.5em | 30em
+$griddo-behavior:       false !default;
+$griddo-float:          left !default;
+$griddo-float-opposite: right !default;
+$griddo-dividend:       false !default;
+$griddo-divisor:        $griddo-columns !default;
 
-/* ------------------------ *\
-		Fluid widths
-\* ------------------------ */
 
 // Calculate the % witdh of each column
 
 @function column-perc($griddo-row-width, $griddo-divisor) {
-	@for $griddo-dividend from 1 through $griddo-divisor {
-		@return (((($griddo-row-width - ($griddo-gutter * 2)) - (($griddo-divisor - 1) * $griddo-gutter)) / $griddo-divisor) / ($griddo-row-width - ($griddo-gutter * 2))) * 100%;
-	}
+  @for $griddo-dividend from 1 through $griddo-divisor {
+    @return (((($griddo-row-width - ($griddo-gutter * 2)) - (($griddo-divisor - 1) * $griddo-gutter)) / $griddo-divisor) / ($griddo-row-width - ($griddo-gutter * 2))) * 100%;
+  }
 }
 
 
 // Calculate the % witdh of each gutter
 
 @function gutter-perc($griddo-row-width, $griddo-divisor) {
-	@for $griddo-dividend from 1 through $griddo-divisor {
-		@return (100% - (column-perc($griddo-row-width, $griddo-divisor) * $griddo-divisor)) / ($griddo-divisor - 1);
-	}
+  @for $griddo-dividend from 1 through $griddo-divisor {
+    @return (100% - (column-perc($griddo-row-width, $griddo-divisor) * $griddo-divisor)) / ($griddo-divisor - 1);
+  }
 }
-
-/* ------------------------ *\
-
-\* ------------------------ */
 
 
 // Function for calculate percentage.
 
 @function griddo-calc($griddo-dividend, $griddo-divisor) {
-	@return percentage($griddo-dividend / $griddo-divisor);
+  @return percentage($griddo-dividend / $griddo-divisor);
 }
 
 
-// Function calculating griid-pulls' steps
+// Function calculating griddo-pulls' steps
 
 @function rsp-pos-step($griddo-dividend, $griddo-divisor) {
 
-	$griddo-subtract: (($griddo-divisor - $griddo-dividend) / $griddo-divisor) * $griddo-gutter;
-	@for $griddo-dividend from 1 through $griddo-divisor {
-		@return $griddo-subtract;
-	}
+  $griddo-subtract: (($griddo-divisor - $griddo-dividend) / $griddo-divisor) * $griddo-gutter;
+  @for $griddo-dividend from 1 through $griddo-divisor {
+    @return $griddo-subtract;
+  }
 }
 
 
-// Function calculating griid-pushes & offset steps
+// Function calculating griddo-pushes & offset steps
 
 @function rsp-neg-step($griddo-dividend, $griddo-divisor) {
 
-	$griddo-add: (- $griddo-dividend / $griddo-divisor) * $griddo-gutter;
-	@for $griddo-dividend from 1 through $griddo-divisor {
-		@return $griddo-add;
-	}
+  $griddo-add: (- $griddo-dividend / $griddo-divisor) * $griddo-gutter;
+  @for $griddo-dividend from 1 through $griddo-divisor {
+    @return $griddo-add;
+  }
 }
 
 
@@ -68,229 +62,241 @@ $griddo-divisor:		$griddo-columns !default;
 
 @mixin griddo-row($griddo-behavior: false, $griddo-gutter: $griddo-gutter) {
 
-	@if $griddo-behavior == nest {
-		@include griddo-row-nest($griddo-gutter: $griddo-gutter);
-	}
-	@else if $griddo-behavior == collapse {
-		@include griddo-row-collapse;
-	}
-	@else if $griddo-behavior == nest-collapse {
-		@include griddo-row-nest-collapse;
-	}
-	@else {
-		@include griddo-row-default;
-	}
-
-	@extend %griddo-fixed;
+  @if $griddo-behavior == nest {
+    @include griddo-row-nest($griddo-gutter: $griddo-gutter);
+  } @else if $griddo-behavior == collapse {
+    @include griddo-row-collapse;
+  } @else if $griddo-behavior == nest-collapse {
+    @include griddo-row-nest-collapse;
+  } @else {
+    @include griddo-row-default;
+  }
+  @include griddo-clearfix;
 }
 
 
 // Row type: Default
 
 @mixin griddo-row-default {
-	margin: 0 auto;
-	max-width: $griddo-row-width;
-	padding: 0 ($griddo-gutter / 2);
-	width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $griddo-row-width;
+  padding-left: $griddo-gutter;
+  padding-right: $griddo-gutter;
+  width: 100%;
 }
 
 
 // Row type: Nest
 
 @mixin griddo-row-nest($griddo-gutter: $griddo-gutter) {
-	margin: 0 (-($griddo-gutter / 2));
-	max-width: none;
-	width: auto;
+  margin-left: (-($griddo-gutter / 2));
+  margin-right: (-($griddo-gutter / 2));
+  max-width: none;
+  width: auto;
 }
 
 
 // Row type: Collapse
 
 @mixin griddo-row-collapse {
-	margin: 0;
-	max-width: $griddo-row-width;
-	width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: $griddo-row-width;
+  width: 100%;
 }
 
 
 // Row type: Nest collapse
 
 @mixin griddo-row-nest-collapse {
-	margin: 0;
-	max-width: none;
-	width: auto;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+  width: auto;
 }
-
 
 // Render a column.
 
 @mixin griddo-column($griddo-dividend: false, $griddo-divisor: $griddo-columns, $griddo-gutter: $griddo-gutter) {
-	float: $griddo-float;
-	list-style: none;
-	min-height: 1px;
-	position: relative;
+  float: $griddo-float;
+  list-style: none;
+  min-height: 1px;
+  position: relative;
 
-	@if $griddo-dividend {
-		@include griddo-width($griddo-dividend, $griddo-divisor);
-	}
+  @if $griddo-dividend {
+    @include griddo-width($griddo-dividend, $griddo-divisor);
+  }
 }
 
 
 // Return calculated width.
 
 @mixin griddo-width($griddo-dividend, $griddo-divisor: $griddo-columns) {
-	/* width: column-perc($griddo-row-width, $griddo-divisor); */ // fallback - temporary test draft
-	width: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} - #{rsp-pos-step($griddo-dividend, $griddo-divisor)});
+  width: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} - #{rsp-pos-step($griddo-dividend, $griddo-divisor)});
 }
 
 
 // Default float.
 
 @mixin griddo-float {
-	float: $griddo-float;
+  float: $griddo-float;
 }
 
 
 // Center a column or item.
 
 @mixin griddo-centered {
-	float: none;
-	margin: 0 auto;
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
 // Float last column on opposite side.
 
 @mixin griddo-last {
-	float: $griddo-float-opposite;
+  float: $griddo-float-opposite;
 }
 
 
 // Offset a column.
 
 @mixin griddo-offset($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
-	margin-#{$griddo-float}: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} + #{-(rsp-neg-step($griddo-dividend, $griddo-divisor))});
+  margin-#{$griddo-float}: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} + #{-(rsp-neg-step($griddo-dividend, $griddo-divisor))});
 }
 
 
 // Push a column.
 
 @mixin griddo-push($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
-	#{$griddo-float}: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} + #{-(rsp-neg-step($griddo-dividend, $griddo-divisor))});
-	#{$griddo-float-opposite}: auto;
+  #{$griddo-float}: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} + #{-(rsp-neg-step($griddo-dividend, $griddo-divisor))});
+  #{$griddo-float-opposite}: auto;
 }
 
 
 // Pull a column.
 
 @mixin griddo-pull($griddo-dividend: 1, $griddo-divisor: $griddo-columns) {
-	#{$griddo-float-opposite}: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} + #{rsp-pos-step($griddo-dividend, $griddo-divisor)});
-	#{$griddo-float}: auto;
+  #{$griddo-float-opposite}: calc(#{griddo-calc($griddo-dividend, $griddo-divisor)} + #{-(rsp-neg-step($griddo-dividend, $griddo-divisor))});
+  #{$griddo-float}: auto;
 }
 
 
-// Collapse something
+// Collapse something.
 
 @mixin griddo-collapse {
-	padding: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 
 // Make a single element behave like a row with one column of 100% width.
 
 @mixin griddo-container($griddo-behavior: false, $griddo-gutter: $griddo-gutter) {
-	@include griddo-row($griddo-behavior);
+  @include griddo-row($griddo-behavior);
 }
-
 
 // Clear floats.
 
 @mixin griddo-clearfix {
-	*zoom:1;
-	&:before, &:after { content: " "; display: table; }
-	&:after { clear: both; }
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
 }
 
-%griddo-fixed {
-	@include griddo-clearfix;
-	list-style: none;
-}
 
-// Create griddo classes.
+// Create grid classes.
 
 @mixin griddo-classes(
-		$row-class:   row, 
-		$column-class:  column, 
-		$columns-class: column, 
-		$total-columns: $griddo-columns, 
-		$offset-class:  offset, 
-		$push-class:  push, 
-		$pull-class:  pull
-	) {
-	.#{$row-class} {
-		@include griddo-row;
+    $row-class:     row, 
+    $column-class:  col, 
+    $columns-class: col, 
+    $total-columns: $griddo-columns, 
+    $offset-class:  offset, 
+    $push-class:    push, 
+    $pull-class:    pull
+  ) {
 
-		&.collapse {
-			.#{$column-class} {
-				@include griddo-collapse;
-			}
-		}
+  .#{$row-class} {
+    @include griddo-row;
 
-		.#{$row-class} {
-			@include griddo-row(nest);
+    &.collapse {
+      .#{$column-class} {
+        @include griddo-collapse;
+      }
+    }
 
-			&.collapse {
-				@include griddo-row(nest-collapse);
-			}
-		}
-	}
+    .#{$row-class} {
+      @include griddo-row(nest);
 
-	@if $column-class != false {
-		.#{$column-class} {
-			@include griddo-column;
-		}
+      &.collapse {
+        @include griddo-row(nest-collapse);
+      }
+    }
+  }
 
-		.#{$column-class}.centered {
-			@include griddo-centered;
-		}
+  @for $i from 1 through $total-columns {
+    .#{$columns-class}#{-$i} {
+      @include griddo-width($i, $total-columns);
+      & + .#{$columns-class} {
+        margin-#{$griddo-float}: $griddo-gutter;
+      }
+    }
+  }
 
-		[class*="#{$column-class}"] + [class*="#{$column-class}"]:last-child {
-			@include griddo-last;
-		}
+  @if $column-class != false {
+    .#{$column-class} {
+      @include griddo-column;
+    }
 
-		[class*="#{$column-class}"] + [class*="#{$column-class}"].end {
-			@include griddo-float;
-		}
-	}
+    .#{$column-class}.centered {
+      @include griddo-centered;
+    }
 
-	@for $i from 1 through $total-columns {
-		.#{$columns-class}#{-$i} {
-			@include griddo-width($i, $total-columns);
-		}
-	}
+    [class*="#{$column-class}"] + [class*="#{$column-class}"]:last-child {
+      @include griddo-last;
+    }
 
-	@for $i from 1 through $total-columns - 1 {
-		.#{$offset-class}#{-$i} {
-			@include griddo-offset($i, $total-columns);
-		}
+    [class*="#{$column-class}"] + [class*="#{$column-class}"].end {
+      @include griddo-float;
+    }
+  }
 
-		.#{$push-class}#{-$i} {
-			@include griddo-push($i, $total-columns);
-		}
+  @for $i from 1 through $total-columns {
+    > .#{$column-class}-#{$i}_#{$total-columns} {
+      @include griddo-width($i, $total-columns);
+    }
+  }
 
-		.#{$pull-class}#{-$i} {
-			@include griddo-pull($i, $total-columns);
-		}
-	}
+  & > .#{$column-class} + .#{$column-class} {
 
-	@for $i from 1 through $total-columns {
-		> .#{$column-class}-#{$i}_#{$total-columns} {
-			@include griddo-width($i, $total-columns);
-		}
+    @if $total-columns != 1 {
+      margin-#{$griddo-float}: $griddo-gutter;
+    } @else {
+      margin-#{$griddo-float}: 0;
+    }
+  }
 
-	}
-	& > .#{$column-class} + .#{$column-class} {
-		/* margin-left: gutter-perc($griddo-row-width, $griddo-divisor); */ // fallback - temporary test draft
-		margin-left: $griddo-gutter;
-	}
+  @for $i from 1 through $total-columns - 1 {
+    .#{$offset-class}#{-$i} {
+      @include griddo-offset($i, $total-columns);
+    }
+
+    .#{$push-class}#{-$i} {
+      @include griddo-push($i, $total-columns);
+    }
+
+    .#{$pull-class}#{-$i} {
+      @include griddo-pull($i, $total-columns);
+    }
+  }
 }
