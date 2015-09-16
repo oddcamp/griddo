@@ -1,6 +1,6 @@
 # Griddo
 
-Griddo is a collection of SCSS mixins that helps you build grids.
+Griddo is a collection of SCSS mixins that helps you build grids. 
 
 It handles grids and only grids. No responsive/breakpointy stuff. You'll have to provide that by yourself. Hello separation of concerns.
 
